@@ -1,0 +1,11 @@
+<requisicao>
+	<metodo>
+		<nome>getHistorico</nome>
+		<parametros>
+			<parametro>
+				<nome>matricula</nome>
+				<valor>2016780329</valor>
+			</parametro>
+		</parametros>
+	</metodo>
+</requisicao>
