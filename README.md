@@ -7,4 +7,5 @@ O Cliente terá o XML Schema(XSD) de um histórico escolar, para que possa inter
 O Servidor terá um conjunto de arquivos XML de históricos escolares, onde o mesmo fará uma busca pela matrícula por este conjunto para encontrar o histórico escolar correspondente, e depois envia o correspondente ao cliente. Além disso, o Servidor terá o XSD da requisição do método, o qual o cliente irá enviar para solicitar um histórico escolar.
 
 Cliente - Escrito em Python
+
 Servidor - Escrito em Java
