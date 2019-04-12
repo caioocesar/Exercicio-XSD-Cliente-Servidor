@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<pessoa>
+    <nome>Vitor</nome>
+    <idade>20</idade>
+    <cpf>16949415745</cpf>
+</pessoa>
