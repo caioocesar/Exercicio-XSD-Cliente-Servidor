@@ -1,5 +1,7 @@
 package serverTCP;
 
+import java.io.BufferedOutputStream;
+
 //refference : http://www.java2s.com/Tutorials/Java/Java_Network/0010__Java_Network_TCP_Server.htm
 
 import java.io.BufferedReader;
@@ -7,14 +9,20 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -58,13 +66,8 @@ public class MainServerTcp {
 		return file;
 	}
 
-	public static String tratarChamadaDosMetodos(File f) throws FileNotFoundException {
-		Scanner scanner = new Scanner(f);
-		while(scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-			System.out.println(line);
-		}
-		return "recenodo!!!";
+	public static String tratarChamadaDosMetodos(File f) {
+		return XMLManipulation.executeMethod(f);
 	}
 
 	public static void handleClientRequestFile(Socket socket) {
@@ -76,17 +79,21 @@ public class MainServerTcp {
 			while(socket.isConnected()) {	    	  
 				socketIn = socket.getInputStream();
 				File commandFile = getOrCreatFile("Thread"+ tid +"-commandFile.xml");
-				fileStreamRcv = new FileOutputStream(absolutePath+"Thread"+ tid +"-commandFile.xml");
+				//fileStreamRcv = new FileOutputStream(absolutePath+"Thread"+ tid +"-commandFile.xml");
 
 				byte [] rcvBytes = new byte[bytesMaxSize];
 
 				int countIn = socketIn.read(rcvBytes);
-				fileStreamRcv.write(rcvBytes);
-				fileStreamRcv.close();
+				FileWriter fw = new FileWriter(commandFile);
+				//Charset charset = Charset.forName("UTF-8");
+				fw.write(new String(rcvBytes)); //como converter isso pra string certo??
+				//fazer o arquivo deixar de ficar vazio
+				
+				//fileStreamRcv.flush();
+				//fileStreamRcv.close();
 
 				//tratar validação do xml e decidir qual função chamar
 				String retorno = tratarChamadaDosMetodos(commandFile);
-
 				BufferedWriter socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 				socketWriter.write(retorno);
 				socketWriter.flush();
