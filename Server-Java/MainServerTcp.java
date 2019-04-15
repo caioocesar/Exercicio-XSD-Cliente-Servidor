@@ -1,28 +1,18 @@
 package serverTCP;
 
-import java.io.BufferedOutputStream;
-
 //refference : http://www.java2s.com/Tutorials/Java/Java_Network/0010__Java_Network_TCP_Server.htm
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -76,23 +66,21 @@ public class MainServerTcp {
 			InputStream socketIn = null;
 			OutputStream fileStreamRcv = null;
 
-			while(socket.isConnected()) {	    	  
+			while(socket.isConnected()) {
 				socketIn = socket.getInputStream();
-				File commandFile = getOrCreatFile("Thread"+ tid +"-commandFile.xml");
-				//fileStreamRcv = new FileOutputStream(absolutePath+"Thread"+ tid +"-commandFile.xml");
 
 				byte [] rcvBytes = new byte[bytesMaxSize];
 
 				int countIn = socketIn.read(rcvBytes);
-				FileWriter fw = new FileWriter(commandFile);
-				//Charset charset = Charset.forName("UTF-8");
-				fw.write(new String(rcvBytes)); //como converter isso pra string certo??
-				//fazer o arquivo deixar de ficar vazio
 				
-				//fileStreamRcv.flush();
-				//fileStreamRcv.close();
+				File commandFile = getOrCreatFile("Thread"+ tid +"-commandFile.xml");
+				fileStreamRcv = new FileOutputStream(commandFile);
 
-				//tratar validação do xml e decidir qual função chamar
+				
+				fileStreamRcv.write((new String(rcvBytes, 0, countIn)).getBytes());
+				fileStreamRcv.close();
+
+				//trata validação do xml e decide qual função chamar
 				String retorno = tratarChamadaDosMetodos(commandFile);
 				BufferedWriter socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 				socketWriter.write(retorno);
