@@ -1,0 +1,170 @@
+<HistoricoEscolar>
+    <universidade>
+        <nome>Universidade Federal Rural do Rio de Janeiro</nome>
+        <abreviacao>UFRRJ</abreviacao>
+    </universidade>
+    <curso>Ciência da Computação</curso>
+    <aluno>Bárbara Ayres Saraiva</aluno>
+    <matricula>2016780582</matricula>
+    <crMedio>5.89</crMedio>
+    <dataGeracao>07/01/2019</dataGeracao>
+    <horaGeracao>14:18:57</horaGeracao>
+    <codigoAutenticacao>559C.4A55.A372.B5D7.4454.7627.F38A.C62A.98B8.E435</codigoAutenticacao>
+    <periodos>
+
+        <Periodo>
+            <anoSemestre>2018-1</anoSemestre>
+            <creditosSolicitados>20</creditosSolicitados>
+            <creditosAcumulados>80</creditosAcumulados>
+            <creditosObtidos>12</creditosObtidos>
+            <crPeriodo>5.38</crPeriodo>
+            <disciplinas>
+                <AtividadeAcademica>
+                    <codigo>AB782</codigo>
+                    <nome>LABORATÓRIO DE INTELIGÊNCIA ARTIFICIAL</nome>
+                    <creditos>0</creditos>
+                    <nota>1.0</nota>
+                    <situacaoAA>AC</situacaoAA>
+                </AtividadeAcademica>
+
+                <AtividadeAcademica>
+                    <codigo>AB783</codigo>
+                    <nome>LABORATÓRIO DE SISTEMAS OPERACIONAIS</nome>
+                    <creditos>0</creditos>
+                    <nota>1.0</nota>
+                    <situacaoAA>AC</situacaoAA>
+                </AtividadeAcademica>
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>IM864</codigo>
+                    <nome>LINGUAGENS DE PROGRAMAÇÃO</nome>
+                    <creditos>4</creditos>
+                    <nota>6.0</nota>
+                    <situacao>AP</situacao>
+                </Disciplina> 
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>IM868</codigo>
+                    <nome>SISTEMAS OPERACIONAIS</nome>
+                    <creditos>4</creditos>
+                    <nota>3.6</nota>
+                    <situacao>RM</situacao>
+                </Disciplina> 
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>IM870</codigo>
+                    <nome>INTELIGÊNCIA ARTIFICIAL</nome>
+                    <creditos>4</creditos>
+                    <nota>7.5</nota>
+                    <situacao>AP</situacao>
+                </Disciplina> 
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>TM410</codigo>
+                    <nome>MÉTODOS NUMÉRICOS</nome>
+                    <creditos>4</creditos>
+                    <nota>4.6</nota>
+                    <situacao>RM</situacao>
+                </Disciplina> 
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>TM424</codigo>
+                    <nome>ESTRUTURA DE DADOS I</nome>
+                    <creditos>4</creditos>
+                    <nota>5.2</nota>
+                    <situacao>AP</situacao>
+                </Disciplina> 
+            </disciplinas>       
+        </Periodo>
+
+        <Periodo>
+            <anoSemestre>2018-2</anoSemestre>
+            <creditosSolicitados>24</creditosSolicitados>
+            <creditosAcumulados>100</creditosAcumulados>
+            <creditosObtidos>20</creditosObtidos>
+            <crPeriodo>5.95</crPeriodo>
+            <disciplinas>
+                <AtividadeAcademica>
+                    <codigo>AB781</codigo>
+                    <nome>LABORATÓRIO DE GRAFOS E ALGORITMOS</nome>
+                    <creditos>0</creditos>
+                    <nota>0.0</nota>
+                    <situacaoAA>NC</situacaoAA>
+                </AtividadeAcademica>
+                
+                <AtividadeAcademica>
+                    <codigo>AA789</codigo>
+                    <nome>LABORATÓRIO DE ESTRUTURA DE DADOS II</nome>
+                    <creditos>0</creditos>
+                    <nota>0.0</nota>
+                    <situacaoAA>NC</situacaoAA>
+                </AtividadeAcademica>
+
+                <AtividadeAcademica>
+                    <codigo>AB784</codigo>
+                    <nome>LABORATÓRIO DE BANCO DE DADOS E MODELAGEM</nome>
+                    <creditos>0</creditos>
+                    <nota>0.0</nota>
+                    <situacaoAA>NC</situacaoAA>
+                </AtividadeAcademica>
+
+                <AtividadeAcademica>
+                    <codigo>AB785</codigo>
+                    <nome>LABORATÓRIO DE REDES DE COMPUTADORES</nome>
+                    <creditos>0</creditos>
+                    <nota>0.0</nota>
+                    <situacaoAA>NC</situacaoAA>
+                </AtividadeAcademica>
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>IM861</codigo>
+                    <nome>COMPILADORES</nome>
+                    <creditos>4</creditos>
+                    <nota>6.6</nota>
+                    <situacao>AP</situacao>
+                </Disciplina>
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>TM411</codigo>
+                    <nome>TOP. ESP. EM CIÊNCIA DA COMPUTAÇÃO</nome>
+                    <creditos>4</creditos>
+                    <nota>7.0</nota>
+                    <situacao>AP</situacao>
+                </Disciplina>
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>TM412</codigo>
+                    <nome>MODELAGEM DE SISTEMAS</nome>
+                    <creditos>4</creditos>
+                    <nota>5.4</nota>
+                    <situacao>AP</situacao>
+                </Disciplina>
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>TM408</codigo>
+                    <nome>GRAFOS E ALGORITMOS</nome>
+                    <creditos>4</creditos>
+                    <nota>5.8</nota>
+                    <situacao>AP</situacao>
+                </Disciplina>
+
+                <Disciplina categoria = "obrigatoria">
+                    <codigo>TM427</codigo>
+                    <nome>REDES DE COMPUTADORES</nome>
+                    <creditos>4</creditos>
+                    <nota>6.3</nota>
+                    <situacao>AP</situacao>
+                </Disciplina>
+                
+                  <Disciplina categoria = "obrigatoria">
+                    <codigo>IM860</codigo>
+                    <nome>ESTRUTURAS DE DADOS II</nome>
+                    <creditos>4</creditos>
+                    <nota>4.6</nota>
+                    <situacao>RM</situacao>
+                </Disciplina>
+                
+            </disciplinas>
+        </Periodo>
+    </periodos>
+</HistoricoEscolar>
