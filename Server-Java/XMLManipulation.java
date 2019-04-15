@@ -121,7 +121,7 @@ public class XMLManipulation {
 
     public static String XMLWithContent(String matricula) throws SAXException, IOException, ParserConfigurationException {
 
-        String dirName = "database/";
+        String dirName = MainServerTcp.absolutePath + "database/";
         String mat = null;
 
         File directory = new File(dirName);
@@ -176,7 +176,7 @@ public class XMLManipulation {
 
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = factory.newSchema(new File("requisicao.xsd"));
+            Schema schema = factory.newSchema(new File(MainServerTcp.absolutePath + "requisicao.xsd"));
 
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(xmlSource));
