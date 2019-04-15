@@ -3,7 +3,7 @@ from lxml import etree
 from sys import exit
 from socket import *
 from threading import *
-from collections import deque
+import time
 
 TESTE = True
 
@@ -14,11 +14,9 @@ port = 4446
 
 lock = Lock()
 
-xsd_arq = open("arquivo.xsd", "r+")
+xml_arq = open("historico.xml", "r+")
 
-xsd_doc = etree.parse(xsd_arq)
-
-xsd = etree.XMLSchema(xsd_doc)
+xml_doc = etree.parse(xml_arq)
 
 
 class MySocket:
@@ -50,7 +48,8 @@ class MySocket:
 
     def mysend(self, msg):
         totalsent = 0
-        cod = msg.encode('utf-8')
+        #cod = msg.encode('utf-8')
+        cod = msg
 
         MSGLEN = len(cod)
         while totalsent < MSGLEN:
@@ -106,4 +105,14 @@ sClientSocket = MySocket(sock)
 
 msg = sClientSocket.receive()
 
-print(msg)
+print("Mensagem recebida:\n" + msg)
+
+time.sleep(0.5)
+
+data_send = etree.tostring(xml_doc)
+
+print("Enviando:\n" + str(data_send))
+
+sClientSocket.mysend(data_send)
+
+print("Programa acaba")

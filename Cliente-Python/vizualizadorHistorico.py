@@ -1,4 +1,6 @@
+import locale
 from lxml import etree
+
 from sys import exit
 from socket import *
 from threading import *
@@ -12,6 +14,10 @@ port = 4446
 ###########
 
 on = True
+received_msg = ''
+lock = Lock()
+
+print(locale.getpreferredencoding(False))
 
 class MySocket:
     def __init__(self, sock=None):
@@ -65,14 +71,15 @@ class MySocket:
         return b''.join(chunks)
 
     def myreceive(self):
-        data = self.sock.recv(2048)
+        data = self.sock.recv(4096)
         return data.decode('utf-8')
 
     def tryConnection(self, host, port):
         ''' Método que tenta conectar com o host'''
         while True:
             if self.connect(host, port):
-                self.echo("Conectado ao host")
+                if TESTE:
+                    self.echo("Conectado ao host")
                 self.rcvThread = myThread('rcv', self.sock)
                 self.rcvThread.start()
                 break
@@ -86,7 +93,6 @@ class MySocket:
         ''' Só foi criado para ter que dar um [Enter] toda vez que uma mensagem for exibida, questões de teste'''
         print(msg)
         input()
-
 
 class myThread(Thread):
     def __init__(self, name, sock):
@@ -102,35 +108,130 @@ class myThread(Thread):
             print("Iniciando thread " + self.name)
 
         while on:
-            received_msg = self.socket.myreceive()
+            msg = self.socket.myreceive()
+            with lock:
+                received_msg = str(msg)
             if not received_msg:
                 exit(0)
 
 def run():
-    ''' Abrindo o arquivo xsd '''
-    xsd_arq = open("arquivo.xsd", "r+")
 
-    ''' Transformando o arquivo aberto em arvore de elementos '''
-    xsd_doc = etree.parse(xsd_arq)
+    global received_msg
 
-    ''' Método da biblioteca que Guarda que o arquivo lido é um XML Schema que vai ser usado para validação '''
-    xsd = etree.XMLSchema(xsd_doc)
+    waiting_HE = False
 
-    xml_arq = open("arquivo.xml", "r+")
-
-    xml_doc = etree.parse(xml_arq)
-
-    if xsd.validate(xml_doc) is True:
-        print('True')
-    else:
-        print('False')
-
+    xsd = carregarXSD("he_schema.xsd")
 
     clientSocket = MySocket()
 
     clientSocket.tryConnection(host, port)
 
-    dataSend = etree.tostring(xml_doc)
-    clientSocket.mysend(dataSend)
+    while True:
+        ans = input("1 - Acessar histórico\n 2 - Sair do programa")
+
+        if ans == '1':
+            data_send = etree.tostring(carregarXML("getHistorico.xml"))
+
+            clientSocket.mysend(data_send)
+
+            waiting_HE = True
+
+            break
+
+        elif ans == '2':
+            break
+
+        else:
+            print("Entrada inválida")
+
+    while waiting_HE:
+
+        with lock:
+            if received_msg != '':
+
+                if TESTE:
+                    print("Olha: " + received_msg)
+
+                if validate(received_msg, xsd):
+                    imprimir(received_msg)
+                else:
+
+                    print("Algo de errado não está certo, XML não corresponde ao Schema")
+
+
+                received_msg = ''
+                waiting_HE = False
+
+
+def carregarXML(nome_arq):
+    # Abrindo o arquivo xml
+    xsd_arq = open(nome_arq, "r+")
+
+    # Transformando o arquivo aberto em arvore de elementos
+    return etree.parse(xsd_arq)
+
+def validate(msg, xsd):
+
+    #xml_doc = etree.parse(msg)
+    xml_doc = etree.fromstring(msg)
+
+    return xsd.validate(xml_doc)
+
+def carregarXSD(nome_arq):
+    # Abrindo o arquivo xsd
+    xsd_arq = open(nome_arq, "r+")
+
+    # Transformando o arquivo aberto em arvore de elementos
+    xsd_doc = etree.parse(xsd_arq)
+
+    # Método da biblioteca que Guarda que o arquivo lido é um XML Schema que vai ser usado para validação
+    return etree.XMLSchema(xsd_doc)
+
+def imprimir(XMLdoHistorico):  # passar nome do arquivo xml ja salvo em memoria!! Nao adianta passar string e tentar usar fromstring ou fazer aqui o arquivo
+
+    #xml_arq = etree.parse(XMLdoHistorico)
+    xml_arq = etree.fromstring(XMLdoHistorico)
+    xml = xml_arq.getroot()
+
+    print("------------------------------------------------------------------------")
+    print(xml[0][0].text)
+    print(xml[0][1].text)
+    print("Curso: " + xml[1].text)
+    print("Aluno: " + xml[2].text)
+    print("Matricula: " + xml[3].text)
+    print("Cr medio: " + xml[4].text)
+    print("Data geracao: " + xml[5].text)
+    print("Hora geracao: " + xml[6].text)
+    print("Cod autenticacao: " + xml[7].text)
+    print("------------------------------------------------------------------------")
+    print("\n")
+    listaPeriodos = xml[8].findall('Periodo')
+    for i in range(len(listaPeriodos)):
+        print("Ano Semestre: " + listaPeriodos[i][0].text)
+        print("Creditos solicitados: " + listaPeriodos[i][1].text)
+        print("Creditos acumulados: " + listaPeriodos[i][2].text)
+        print("Creditos obtidos: " + listaPeriodos[i][3].text)
+        print("Cr periodo: " + listaPeriodos[i][4].text)
+        print("\n")
+
+        listaDisciplinasAA = listaPeriodos[i][5].findall('AtividadeAcademica')
+        for j in range(len(listaDisciplinasAA)):
+            print("\tCodigo disciplina: " + listaDisciplinasAA[j][0].text)
+            print("\tNome disciplina: " + listaDisciplinasAA[j][1].text)
+            print("\tCreditos: " + listaDisciplinasAA[j][2].text)
+            print("\tNota: " + listaDisciplinasAA[j][3].text)
+            print("\tSituacao: " + listaDisciplinasAA[j][4].text)
+            print("\n")
+
+        listaDisciplinas = listaPeriodos[i][5].findall('Disciplina')
+        for j in range(len(listaDisciplinas)):
+            print("\tCodigo disciplina: " + listaDisciplinas[j][0].text)
+            print("\tNome disciplina: " + listaDisciplinas[j][1].text)
+            print("\tCreditos: " + listaDisciplinas[j][2].text)
+            print("\tNota: " + listaDisciplinas[j][3].text)
+            print("\tSituacao: " + listaDisciplinas[j][4].text)
+            print("\n")
+
+        print("------------------------------------------------------------------------")
 
 run()
