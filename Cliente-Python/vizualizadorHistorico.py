@@ -1,4 +1,6 @@
 import locale
+from io import StringIO
+
 from lxml import etree
 
 from sys import exit
@@ -6,7 +8,7 @@ from socket import *
 from threading import *
 import time
 
-TESTE = True
+TESTE = False
 
 ###########
 host = "127.0.0.1"
@@ -190,7 +192,8 @@ def carregarXSD(nome_arq):
 def imprimir(XMLdoHistorico):  # passar nome do arquivo xml ja salvo em memoria!! Nao adianta passar string e tentar usar fromstring ou fazer aqui o arquivo
 
     #xml_arq = etree.parse(XMLdoHistorico)
-    xml_arq = etree.fromstring(XMLdoHistorico)
+    #xml_arq = etree.fromstring(XMLdoHistorico)
+    xml_arq = etree.parse(StringIO(XMLdoHistorico))
     xml = xml_arq.getroot()
 
     print("------------------------------------------------------------------------")
