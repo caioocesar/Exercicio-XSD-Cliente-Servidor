@@ -48,7 +48,7 @@ public class XMLManipulation {
 
             //2) Ler o xml recebido(xml - requisicao)
             if(valid){
-
+                System.out.println("============= xml de requisição válido =============\n");
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
            
@@ -59,10 +59,12 @@ public class XMLManipulation {
                 NodeList nListMetodo = doc.getElementsByTagName("metodo");
                 Element metodo = (Element) nListMetodo.item(0);
                 String nomeMetodo = metodo.getElementsByTagName("nome").item(0).getTextContent();
+                System.out.println("============= método selecionado : [\"" + nomeMetodo + "\"] =============\n");
 
                 NodeList nList = doc.getElementsByTagName("parametros");
 
                 if(nomeMetodo.equals("getHistorico")){
+                    System.out.println("============= iniciando processo do método getHistorico =============\n");
                     Node nNode = nList.item(0);
                             
                     if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -73,6 +75,7 @@ public class XMLManipulation {
                         Element mat = (Element) nNodeMat;
 
                         String matricula = mat.getElementsByTagName("valor").item(0).getTextContent();
+                        System.out.println("============= valor do parametro de matricula: [\"" + matricula + "\"] =============\n");
                         
                         String xmlHEResponse = getHistorico(matricula);
 
@@ -155,6 +158,7 @@ public class XMLManipulation {
     	
     	try{
             xmlPath = XMLWithContent(matricula);
+            System.out.println("============= histórico para [matricula: \"" + matricula + "\"] encontrado =============\n");
         }catch (Exception e){
             return "Erro durante a execução do getMatriculaXML. Abortar";
         }
@@ -162,7 +166,7 @@ public class XMLManipulation {
         try {
 		//2) Converter o conteudo do XML do historico para String.
         xmlContent = transformFileContentToString(xmlPath);
-
+            System.out.println("============= arquivo parseado preparado para envio =============\n");
         }catch (IOException e){
             return "Historico Escolar nao encontrado. Abortar.";
         }

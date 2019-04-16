@@ -1,3 +1,4 @@
+#!/usr/bin/python3.6
 import locale
 from io import StringIO
 
@@ -73,7 +74,7 @@ class MySocket:
         return b''.join(chunks)
 
     def myreceive(self):
-        data = self.sock.recv(4096)
+        data = self.sock.recv(8192)
         return data.decode('utf-8')
 
     def tryConnection(self, host, port):
@@ -153,7 +154,7 @@ def run():
 
                 if TESTE:
                     print("Olha: " + received_msg)
-
+                
                 if validate(received_msg, xsd):
                     imprimir(received_msg)
                 else:

@@ -1,6 +1,7 @@
 package serverTCP;
 
 //refference : http://www.java2s.com/Tutorials/Java/Java_Network/0010__Java_Network_TCP_Server.htm
+
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,7 +23,8 @@ public class MainServerTcp {
 	//static String end = "127.0.0.1";
 	static int port = 4446;
 	static int bytesMaxSize = 4096;
-	static String absolutePath = "A:/ARQUIVOS WILL/FACULDADE/2019-01/TEBD/exercicio xml/arquivos/";
+//	static String absolutePath = "A:/ARQUIVOS WILL/FACULDADE/2019-01/TEBD/exercicio xml/arquivos/";
+	static String absolutePath = "./arquivos/";
 
 	public static void main(String[] argv) throws Exception {
 
@@ -70,25 +72,29 @@ public class MainServerTcp {
 				socketIn = socket.getInputStream();
 
 				byte [] rcvBytes = new byte[bytesMaxSize];
-
+				System.out.println("============= esperando mensagem do cliente =============\n");
 				int countIn = socketIn.read(rcvBytes);
-				
-				File commandFile = getOrCreatFile("Thread"+ tid +"-commandFile.xml");
-				fileStreamRcv = new FileOutputStream(commandFile);
-
-				
+				if(countIn < 0){
+					System.out.println("conexão encerrada pelo cliente - abortando");
+					break;
+				}
+				System.out.println("\n ============= mensagem recebida do cliente: =============\n\n" + (new String(rcvBytes, 0, countIn) + "\n"));
+                File commandFile = getOrCreatFile("Thread"+ tid +"-commandFile.xml");
+                fileStreamRcv = new FileOutputStream(commandFile);
 				fileStreamRcv.write((new String(rcvBytes, 0, countIn)).getBytes());
 				fileStreamRcv.close();
-
-				//trata validação do xml e decide qual função chamar
+				System.out.println("============= xml de requisição salvo =============\n");
+				//tratar validação do xml e decidir qual função chamar
 				String retorno = tratarChamadaDosMetodos(commandFile);
+				//System.out.println("arquivo a ser enviado (bytes: " + retorno.getBytes().length + ") : \n\n" + retorno + "\n");
 				BufferedWriter socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 				socketWriter.write(retorno);
 				socketWriter.flush();
+				System.out.println("[FIM] ============= arquivo enviado com sucesso ============= [FIM]\n");
 			}  
 			socket.close();
 		}catch(IOException e) {
-			System.out.println("falha na manipulação de arquivos");
+			System.out.println("falha na manipulação de arquivos\n");
 			e.printStackTrace();
 		}
 		catch(Exception e){

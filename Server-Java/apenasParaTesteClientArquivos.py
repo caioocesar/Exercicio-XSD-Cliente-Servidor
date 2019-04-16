@@ -14,7 +14,7 @@ s.connect((host,port))          # Connect to server address
 
 ctrl = input("começar a enviar?")
 while(ctrl == ''):
-    f = open('A:/ARQUIVOS WILL/FACULDADE/2019-01/TEBD/exercicio xml/arquivos/12345.txt','rb')
+    f = open('./arquivos/12345.xml','rb')
     l = f.read(4096)
     while (l):
         s.send(l)
