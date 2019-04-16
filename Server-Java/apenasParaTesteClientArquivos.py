@@ -15,14 +15,14 @@ s.connect((host,port))          # Connect to server address
 ctrl = input("começar a enviar?")
 while(ctrl == ''):
     f = open('./arquivos/12345.xml','rb')
-    l = f.read(4096)
+    l = f.read(8192)
     while (l):
         s.send(l)
-        l = f.read(4096)
+        l = f.read(8192)
     print("leu")
     f.close()
     
-    print(str(s.recv(4096)))
+    print(str(s.recv(8192)))
     ctrl = input("proximo envio?")
     
 
