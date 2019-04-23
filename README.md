@@ -1,4 +1,4 @@
-# Trabalho XSD Cliente Servidor
+# Exercício XSD Cliente Servidor
 
 Trabalho feito para a disciplina de "Tópicos Especiais em Banco de Dados". Objetivo é implementar um Servidor de uma universidade e executar uma determinada tarefa quando algum Cliente realiza uma requisição que envia um arquivo xml que contém o nome do método a ser executado no Servidor e seus parâmetros.
 Aqui, só será realizada a implementação do método de obter um histórico escolar dado uma matrícula.
